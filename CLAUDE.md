@@ -20,5 +20,7 @@ Spec: `docs/superpowers/specs/2026-09-21-zquidisfraces-design.md`.
 - Tipos de vistas: usar los de `types/domain.ts` (declaran la nulabilidad real).
 - Formularios: `components/form/fields.tsx` (RHF + shadcn Field). Fechas date-only como `YYYY-MM-DD`; "hoy" con
   `todayISO()` (zona Buenos Aires, igual que `public.hoy()`).
+- Asistente (`lib/asistente/`): herramientas de SOLO LECTURA sobre el cliente Supabase del usuario (RLS aplica);
+  los parámetros opcionales del esquema deben aceptar `null` (Groq valida las tool calls del modelo).
 - Colores de gráficos: `var(--chart-1..5)` en orden fijo (paleta validada para daltonismo). Estados de stock:
   emerald/sky/amber/rose 600.

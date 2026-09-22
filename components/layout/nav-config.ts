@@ -1,5 +1,6 @@
 import {
   Bell,
+  Bot,
   CalendarDays,
   CalendarRange,
   ChartColumn,
@@ -31,6 +32,7 @@ export const NAV_GROUPS: NavGroup[] = [
       { title: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
       { title: "Calendario", href: "/dashboard/calendario", icon: CalendarDays },
       { title: "Alertas", href: "/dashboard/alertas", icon: Bell, badge: "alertas" },
+      { title: "Asistente", href: "/dashboard/asistente", icon: Bot },
     ],
   },
   {
@@ -69,6 +71,7 @@ export const SEGMENT_LABELS: Record<string, string> = {
   reservas: "Reservas",
   calendario: "Calendario",
   alertas: "Alertas",
+  asistente: "Asistente",
   reportes: "Reportes",
   usuarios: "Usuarios",
   nuevo: "Nuevo",

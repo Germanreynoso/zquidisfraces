@@ -31,6 +31,17 @@ export function getPublicEnv(): PublicEnv {
   return cachedPublic
 }
 
+export type GroqConfig = { apiKey: string; model: string }
+
+/** Configuración del asistente (Groq). Solo servidor. */
+export function getGroqConfig(): GroqConfig {
+  const apiKey = process.env.GROQ_API_KEY
+  if (!apiKey) {
+    throw new Error("Falta GROQ_API_KEY (solo servidor). El asistente necesita una clave de Groq en .env.local.")
+  }
+  return { apiKey, model: process.env.GROQ_MODEL || "openai/gpt-oss-120b" }
+}
+
 export function getServiceRoleKey(): string {
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY
   if (!key) {
