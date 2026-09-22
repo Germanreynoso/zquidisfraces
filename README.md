@@ -172,8 +172,46 @@ supabase/               migraciones, seed y tests SQL
 scripts/                verify-db, gen-types, create-admin
 ```
 
-## 10. Deploy (Vercel)
+## 10. Deploy en Netlify
 
-1. Importá el repositorio en Vercel.
-2. Cargá las tres variables de entorno (la `SUPABASE_SERVICE_ROLE_KEY` solo en el entorno de servidor).
-3. En Supabase → Authentication → URL Configuration, poné la URL de producción como *Site URL*.
+El repositorio ya viene configurado: `netlify.toml` + el adaptador oficial `@netlify/plugin-nextjs`,
+que se encarga del App Router, las Server Actions, los route handlers (exportación de reportes) y el
+middleware de sesión.
+
+**Opción A: desde Git (recomendada).**
+
+1. Subí el repositorio: `git push origin main`.
+2. En Netlify: *Add new site → Import an existing project* y elegí el repo. El comando de build y la
+   carpeta de publicación se toman de `netlify.toml`; no hay que configurarlos a mano.
+3. Cargá las variables de entorno en *Site configuration → Environment variables*:
+
+   | Variable | Valor |
+   |---|---|
+   | `NEXT_PUBLIC_SUPABASE_URL` | URL del proyecto Supabase |
+   | `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | clave publishable |
+   | `SUPABASE_SERVICE_ROLE_KEY` | clave secreta (solo si vas a usar la sección **Usuarios**) |
+
+4. Desplegá. Cada push a `main` genera un deploy nuevo.
+
+**Opción B: desde la terminal.**
+
+```bash
+npx netlify login
+npx netlify init                  # crea el sitio y lo vincula a esta carpeta
+npx netlify env:set NEXT_PUBLIC_SUPABASE_URL "https://<tu-proyecto>.supabase.co"
+npx netlify env:set NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY "sb_publishable_..."
+npx netlify env:set SUPABASE_SERVICE_ROLE_KEY "sb_secret_..."   # opcional
+npx netlify deploy --build --prod
+```
+
+Para probar el build de Netlify sin desplegar: `npx netlify build --offline`.
+
+### Después del primer deploy
+
+1. En **Supabase → Authentication → URL Configuration**, poné la URL de Netlify como *Site URL*.
+2. En **Authentication → Sign In / Providers**, dejá desactivado *Allow new users to sign up*:
+   los usuarios los crea el administrador desde la app.
+3. Entrá a la URL, iniciá sesión y (en el celular) usá *Agregar a pantalla de inicio* para tenerla a mano.
+
+> El modo demo (`pnpm demo`) y los scripts de `scripts/` son solo para desarrollo local: no forman parte
+> del build ni se despliegan.

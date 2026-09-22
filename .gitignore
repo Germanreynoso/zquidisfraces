@@ -50,3 +50,6 @@ supabase/.temp
 
 # navegador de pruebas
 .playwright-mcp/
+
+# netlify
+.netlify/

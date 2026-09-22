@@ -55,6 +55,7 @@
     "@electric-sql/pglite": "^0.5.8",
     "@electric-sql/pglite-socket": "0.2.11",
     "@eslint/eslintrc": "^3",
+    "@netlify/plugin-nextjs": "^5.16.0",
     "@tailwindcss/postcss": "^4",
     "@tanstack/react-query-devtools": "^5.103.2",
     "@types/node": "^20",
