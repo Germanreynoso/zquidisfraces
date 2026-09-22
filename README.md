@@ -30,6 +30,8 @@ Completá `.env.local` con los datos de **Supabase → Project Settings → API*
 | `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | clave `publishable` (o `NEXT_PUBLIC_SUPABASE_ANON_KEY` con la `anon` legacy) | Sí (la protege RLS) |
 | `SUPABASE_SERVICE_ROLE_KEY` | clave `secret` / `service_role` | **No. Nunca la subas ni la expongas** |
 | `SUPABASE_DB_URL` | Connect → Session pooler → URI (solo para `pnpm db:apply`) | **No** |
+| `GROQ_API_KEY` | clave de [console.groq.com](https://console.groq.com) para el asistente | **No** |
+| `GROQ_MODEL` | opcional: modelo de Groq (por defecto `openai/gpt-oss-120b`) | Sí |
 
 ## 3. Base de datos
 
@@ -153,6 +155,9 @@ También podés regenerar los tipos desde tu proyecto real con
   (a mantenimiento) y faltantes (a extraviadas). Los costos de reparación y reposición se suman al saldo.
 - **Pagos:** la seña y los cobros posteriores se registran en `pagos`, que alimenta el reporte de ingresos.
   No se permite cobrar más que el saldo.
+- **Asistente:** responde preguntas sobre el negocio consultando la base en vivo (stock, alquileres,
+  clientes, reservas, alertas, ingresos y ranking). Es de **solo lectura**: no crea ni modifica nada, y
+  cada consulta pasa por las políticas RLS del usuario que pregunta.
 - **Alertas:** devoluciones vencidas, devoluciones de hoy/mañana, stock bajo (disponibles por debajo del mínimo),
   extraviados y reservas que empiezan en los próximos 3 días.
 
@@ -190,6 +195,7 @@ middleware de sesión.
    | `NEXT_PUBLIC_SUPABASE_URL` | URL del proyecto Supabase |
    | `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | clave publishable |
    | `SUPABASE_SERVICE_ROLE_KEY` | clave secreta (solo si vas a usar la sección **Usuarios**) |
+   | `GROQ_API_KEY` | clave de Groq (solo si vas a usar el **Asistente**) |
 
 4. Desplegá. Cada push a `main` genera un deploy nuevo.
 
