@@ -7,7 +7,7 @@ import { z } from "zod"
  */
 const publicSchema = z.object({
   url: z.url({ message: "NEXT_PUBLIC_SUPABASE_URL debe ser una URL válida" }),
-  anonKey: z.string().min(1, { message: "Falta NEXT_PUBLIC_SUPABASE_ANON_KEY" }),
+  anonKey: z.string().min(1, { message: "Falta NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY (o NEXT_PUBLIC_SUPABASE_ANON_KEY)" }),
 })
 
 export type PublicEnv = z.infer<typeof publicSchema>
@@ -18,7 +18,8 @@ export function getPublicEnv(): PublicEnv {
   if (cachedPublic) return cachedPublic
   const parsed = publicSchema.safeParse({
     url: process.env.NEXT_PUBLIC_SUPABASE_URL,
-    anonKey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+    // Acepta la clave nueva ("publishable", sb_publishable_…) o la legacy ("anon", JWT).
+    anonKey: process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
   })
   if (!parsed.success) {
     throw new Error(

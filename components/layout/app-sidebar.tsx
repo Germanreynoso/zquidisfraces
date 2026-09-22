@@ -36,7 +36,7 @@ export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton size="lg" asChild tooltip="ZquiDisfraces">
+            <SidebarMenuButton size="lg" asChild tooltip="ZiquiDisfraces">
               <Link href="/dashboard" onClick={() => setOpenMobile(false)}>
                 <BrandMark />
                 <div className="grid flex-1 text-left leading-tight">

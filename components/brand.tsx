@@ -18,7 +18,7 @@ export function BrandMark({ className }: { className?: string }) {
 export function BrandName({ className }: { className?: string }) {
   return (
     <span className={cn("font-heading text-base font-semibold tracking-tight", className)}>
-      Zqui<span className="text-primary">Disfraces</span>
+      Ziqui<span className="text-primary">Disfraces</span>
     </span>
   )
 }

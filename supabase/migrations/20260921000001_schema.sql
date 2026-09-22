@@ -1,5 +1,5 @@
 -- =============================================================================
--- ZquiDisfraces · 01 · Esquema: extensiones, enums, tablas, constraints, índices
+-- ZiquiDisfraces · 01 · Esquema: extensiones, enums, tablas, constraints, índices
 -- =============================================================================
 
 create extension if not exists pg_trgm with schema extensions;

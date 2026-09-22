@@ -1,4 +1,4 @@
-# ZquiDisfraces · guía para agentes
+# ZiquiDisfraces · guía para agentes
 
 Sistema de gestión de alquiler de disfraces. Next.js 15 (App Router) + Supabase. UI en español rioplatense (voseo).
 Spec: `docs/superpowers/specs/2026-09-21-zquidisfraces-design.md`.

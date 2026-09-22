@@ -13,7 +13,7 @@ import type {
   TipoPago,
 } from "@/types/domain"
 
-export const APP_NAME = "ZquiDisfraces"
+export const APP_NAME = "ZiquiDisfraces"
 export const TIMEZONE = "America/Argentina/Buenos_Aires"
 export const LOCALE = "es-AR"
 export const CURRENCY = "ARS"

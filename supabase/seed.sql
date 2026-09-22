@@ -1,5 +1,5 @@
 -- =============================================================================
--- ZquiDisfraces · Datos de prueba
+-- ZiquiDisfraces · Datos de prueba
 -- Ejecutar DESPUÉS de las migraciones (SQL Editor de Supabase o `supabase db reset`).
 -- Idempotente: si ya hay disfraces cargados, no hace nada.
 -- Las fechas son relativas a hoy, así el dashboard siempre muestra datos vigentes.
