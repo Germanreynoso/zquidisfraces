@@ -5,7 +5,7 @@ import { toast } from "sonner"
 
 import { unwrap } from "@/lib/action-result"
 import { actualizarCliente, cambiarEstadoCliente, crearCliente } from "@/lib/actions/clientes"
-import { fetchClienteOpciones } from "@/lib/queries/clientes"
+import { fetchClienteBasico, fetchClienteOpciones } from "@/lib/queries/clientes"
 import { queryKeys } from "@/lib/query-keys"
 import { createClient } from "@/lib/supabase/client"
 import type { ClienteInput } from "@/lib/validations/clientes"
@@ -16,6 +16,14 @@ export function useClienteOpciones(search: string, enabled = true) {
     queryFn: () => fetchClienteOpciones(createClient(), search),
     placeholderData: keepPreviousData,
     enabled,
+  })
+}
+
+export function useClienteBasico(id: string | null | undefined) {
+  return useQuery({
+    queryKey: [...queryKeys.clientes.root, "basico", id],
+    queryFn: () => fetchClienteBasico(createClient(), id!),
+    enabled: Boolean(id),
   })
 }
 
