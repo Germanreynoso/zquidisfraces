@@ -11,13 +11,15 @@ type Options = {
   defaultSort?: { id: string; desc: boolean }
   pageSize?: number
   initialFilters?: Record<string, string[]>
+  /** Filtros a los que vuelve "Limpiar" (por defecto, los iniciales). */
+  resetTo?: Record<string, string[]>
 }
 
 /**
  * Estado de una tabla server-side (paginación, orden, búsqueda con debounce y filtros)
  * y su traducción a ListParams. Cualquier cambio de criterio vuelve a la primera página.
  */
-export function useDataTableState({ defaultSort, pageSize = DEFAULT_PAGE_SIZE, initialFilters }: Options = {}) {
+export function useDataTableState({ defaultSort, pageSize = DEFAULT_PAGE_SIZE, initialFilters, resetTo }: Options = {}) {
   const [pagination, setPagination] = useState<PaginationState>({ pageIndex: 0, pageSize })
   const [sorting, setSortingState] = useState<SortingState>(defaultSort ? [defaultSort] : [])
   const [search, setSearchState] = useState("")
@@ -51,12 +53,13 @@ export function useDataTableState({ defaultSort, pageSize = DEFAULT_PAGE_SIZE, i
   )
 
   const resetFilters = useCallback(() => {
-    setFilters(initialFilters ?? {})
+    setFilters(resetTo ?? initialFilters ?? {})
     setSearchState("")
     resetPage()
-  }, [initialFilters, resetPage])
+  }, [resetTo, initialFilters, resetPage])
 
-  const activeFilters = Object.values(filters).some((values) => values.length > 0) || search.length > 0
+  // "Limpiar" solo tiene sentido si los filtros difieren de aquellos a los que vuelve.
+  const activeFilters = search.length > 0 || !sameFilters(filters, resetTo ?? initialFilters ?? {})
 
   const params: ListParams = useMemo(
     () => ({
@@ -85,3 +88,13 @@ export function useDataTableState({ defaultSort, pageSize = DEFAULT_PAGE_SIZE, i
 }
 
 export type DataTableState = ReturnType<typeof useDataTableState>
+
+function sameFilters(a: Record<string, string[]>, b: Record<string, string[]>): boolean {
+  const keys = new Set([...Object.keys(a), ...Object.keys(b)])
+  for (const key of keys) {
+    const left = [...(a[key] ?? [])].sort()
+    const right = [...(b[key] ?? [])].sort()
+    if (left.length !== right.length || left.some((value, index) => value !== right[index])) return false
+  }
+  return true
+}

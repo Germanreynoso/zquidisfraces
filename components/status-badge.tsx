@@ -11,11 +11,11 @@ const TONE_CLASSES: Record<Tone, string> = {
 }
 
 export const TONE_DOT: Record<Tone, string> = {
-  success: "bg-emerald-500",
-  info: "bg-sky-500",
-  violet: "bg-violet-500",
-  warning: "bg-amber-500",
-  danger: "bg-rose-500",
+  success: "bg-emerald-600",
+  info: "bg-sky-600",
+  violet: "bg-violet-600",
+  warning: "bg-amber-600",
+  danger: "bg-rose-600",
   neutral: "bg-muted-foreground/60",
 }
 

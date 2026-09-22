@@ -5,7 +5,15 @@ import { toast } from "sonner"
 
 import { unwrap } from "@/lib/action-result"
 import { actualizarCliente, cambiarEstadoCliente, crearCliente } from "@/lib/actions/clientes"
-import { fetchClienteBasico, fetchClienteOpciones } from "@/lib/queries/clientes"
+import {
+  fetchAlquileresCliente,
+  fetchCliente,
+  fetchClienteBasico,
+  fetchClienteOpciones,
+  fetchClientes,
+  fetchReservasCliente,
+} from "@/lib/queries/clientes"
+import type { ListParams } from "@/lib/queries/list-params"
 import { queryKeys } from "@/lib/query-keys"
 import { createClient } from "@/lib/supabase/client"
 import type { ClienteInput } from "@/lib/validations/clientes"
@@ -61,5 +69,34 @@ export function useCambiarEstadoCliente() {
       toast.success(activo ? "Cliente reactivado" : "Cliente dado de baja")
       return queryClient.invalidateQueries({ queryKey: queryKeys.clientes.root })
     },
+  })
+}
+
+export function useClientes(params: ListParams) {
+  return useQuery({
+    queryKey: queryKeys.clientes.list(params),
+    queryFn: () => fetchClientes(createClient(), params),
+    placeholderData: keepPreviousData,
+  })
+}
+
+export function useCliente(id: string) {
+  return useQuery({
+    queryKey: queryKeys.clientes.detail(id),
+    queryFn: () => fetchCliente(createClient(), id),
+  })
+}
+
+export function useAlquileresCliente(clienteId: string) {
+  return useQuery({
+    queryKey: queryKeys.clientes.alquileres(clienteId),
+    queryFn: () => fetchAlquileresCliente(createClient(), clienteId),
+  })
+}
+
+export function useReservasCliente(clienteId: string) {
+  return useQuery({
+    queryKey: [...queryKeys.clientes.root, "reservas", clienteId],
+    queryFn: () => fetchReservasCliente(createClient(), clienteId),
   })
 }

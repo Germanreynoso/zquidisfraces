@@ -12,10 +12,10 @@ type StockBarProps = {
 }
 
 const SEGMENTS = [
-  { key: "disponible", label: "Disponibles", className: "bg-emerald-500" },
-  { key: "alquilada", label: "Alquiladas", className: "bg-sky-500" },
-  { key: "mantenimiento", label: "Mantenimiento", className: "bg-amber-500" },
-  { key: "extraviada", label: "Extraviadas", className: "bg-rose-500" },
+  { key: "disponible", label: "Disponibles", className: "bg-emerald-600" },
+  { key: "alquilada", label: "Alquiladas", className: "bg-sky-600" },
+  { key: "mantenimiento", label: "Mantenimiento", className: "bg-amber-600" },
+  { key: "extraviada", label: "Extraviadas", className: "bg-rose-600" },
 ] as const
 
 /** Barra segmentada del stock por estado. */
