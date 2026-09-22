@@ -111,9 +111,11 @@ const columns: ColumnDef<DisfrazVista>[] = [
   },
 ]
 
-export function DisfracesTable() {
+const SIN_FILTROS: Record<string, string[]> = {}
+
+export function DisfracesTable({ initialFilters }: { initialFilters?: Record<string, string[]> }) {
   const router = useRouter()
-  const state = useDataTableState({ defaultSort: { id: "nombre", desc: false } })
+  const state = useDataTableState({ defaultSort: { id: "nombre", desc: false }, initialFilters, resetTo: SIN_FILTROS })
   const { data, isLoading, isFetching } = useDisfraces(state.params)
   const { data: talles = [] } = useTalles()
   const talleOptions = useMemo(() => talles.map((talle) => ({ value: talle, label: talle })), [talles])

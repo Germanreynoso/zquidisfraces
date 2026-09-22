@@ -9,7 +9,7 @@ import { PageHeader } from "@/components/page-header"
 import { useSession } from "@/components/session-provider"
 import { Button } from "@/components/ui/button"
 
-export function InventarioView() {
+export function InventarioView({ initialFilters }: { initialFilters?: Record<string, string[]> }) {
   const { isAdmin } = useSession()
   const [creating, setCreating] = useState(false)
 
@@ -27,7 +27,7 @@ export function InventarioView() {
           )
         }
       />
-      <DisfracesTable />
+      <DisfracesTable initialFilters={initialFilters} />
       {isAdmin && <DisfrazFormSheet open={creating} onOpenChange={setCreating} />}
     </>
   )

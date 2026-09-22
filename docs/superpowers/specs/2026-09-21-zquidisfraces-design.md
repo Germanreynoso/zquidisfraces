@@ -84,7 +84,7 @@ tarjeta, otro)`.
 
 ### Tablas
 
-- **profiles** `id (=auth.users.id), nombre, email, rol, activo, created_at`. Trigger crea el perfil al crear el usuario (rol `empleado` por defecto; el dueño se promueve con `scripts/create-admin.ts`).
+- **profiles** `id (=auth.users.id), nombre, email, rol, activo, created_at`. Trigger crea el perfil al crear el usuario: el **primer usuario queda admin activo**; los siguientes, empleado **inactivo** hasta que un admin los habilite (defensa ante registros no autorizados). `scripts/create-admin.ts` crea o promueve al dueño.
 - **disfraces** `id, codigo (único), nombre, categoria, descripcion, talle, estado (generado), cantidad_total,
   cantidad_disponible, cantidad_alquilada, cantidad_mantenimiento, cantidad_extraviada, stock_minimo,
   precio_alquiler, precio_reposicion, imagen_url, activo, fecha_creacion, updated_at, deleted_at`.
@@ -107,7 +107,7 @@ tarjeta, otro)`.
   costo_reposicion, observaciones, created_by, created_at`.
 - **devolucion_items** `id, devolucion_id, alquiler_item_id, disfraz_id, cantidad_ok, cantidad_danada,
   cantidad_faltante, observaciones`. CHECK suma = cantidad alquilada del item.
-- **reservas** `id, cliente_id, fecha_inicio, fecha_fin, estado, sena, observaciones, alquiler_id?, created_by, created_at, updated_at`.
+- **reservas** `id, cliente_id, fecha_inicio, fecha_fin, estado, observaciones, alquiler_id?, created_by, created_at, updated_at`. Estado `convertida` (UI: “Retirada”) cuando se transforma en alquiler; la seña se cobra al retirar.
 - **reserva_items** `id, reserva_id, disfraz_id, cantidad (>0)`.
 
 Índices: FKs, `disfraces(categoria)`, `disfraces(activo)`, trigram en `disfraces(nombre, codigo)` y
@@ -122,7 +122,7 @@ tarjeta, otro)`.
   `capacidad = total − mantenimiento − extraviada`; para cada día del rango
   `uso(d) = Σ alquileres activos que cubren d + Σ reservas pendientes/confirmadas que cubren d`;
   `disponible = capacidad − max(uso(d))`. Un alquiler vencido se considera ocupando hasta `max(fecha_devolucion, hoy)`.
-- **Crear alquiler** (`crear_alquiler`): bloquea los disfraces, exige `cantidad_disponible ≥ cantidad` (físico) y
+- **Crear alquiler** (`crear_alquiler`): la fecha de alquiler no puede ser futura (para eso están las reservas). Bloquea los disfraces, exige `cantidad_disponible ≥ cantidad` (físico) y
   disponibilidad en el rango ≥ cantidad (respeta reservas futuras). Mueve disponible→alquilada, registra
   movimiento, registra seña como pago. Opcional: convertir una reserva (la excluye del cálculo y la marca `convertida`).
 - **Devolución** (`registrar_devolucion`): por item ok→disponible, dañada→mantenimiento, faltante→extraviada;
@@ -134,7 +134,7 @@ tarjeta, otro)`.
 - **Ajuste de stock** (admin, `ajustar_stock`): alta de unidades, baja, a mantenimiento, reparado, extraviado,
   recuperado. Todo queda en `movimientos_stock`.
 - **Alertas** (vista `v_alertas`, calculada): devoluciones vencidas, devoluciones hoy/mañana, stock bajo
-  (`disponible ≤ stock_minimo`), disfraces con extraviados, reservas que empiezan en ≤ 3 días.
+  (`disponible < stock_minimo`), disfraces con extraviados, reservas que empiezan en ≤ 3 días.
 
 ## 6. Seguridad (RLS)
 
