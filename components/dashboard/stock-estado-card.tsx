@@ -5,7 +5,7 @@ import Link from "next/link"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
-import { formatNumber } from "@/lib/format"
+import { formatNumber, pluralize } from "@/lib/format"
 import { cn } from "@/lib/utils"
 import type { DashboardResumen } from "@/types/domain"
 
@@ -29,7 +29,7 @@ export function StockEstadoCard({ resumen, loading }: { resumen?: DashboardResum
           {loading ? <Skeleton className="h-9 w-24" /> : `${formatNumber(total)} u.`}
         </CardTitle>
         {!loading && resumen && (
-          <p className="text-xs text-muted-foreground">{formatNumber(resumen.modelos)} modelos activos en catálogo</p>
+          <p className="text-xs text-muted-foreground">{pluralize(resumen.modelos, "modelo")} activo{resumen.modelos === 1 ? "" : "s"} en catálogo</p>
         )}
       </CardHeader>
       <CardContent className="space-y-5">

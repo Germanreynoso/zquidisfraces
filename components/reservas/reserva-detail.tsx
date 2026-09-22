@@ -151,9 +151,9 @@ export function ReservaDetail({ id }: { id: string }) {
           <CardContent>
             <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-2 text-sm">
               <dt className="text-muted-foreground">Retira</dt>
-              <dd className="text-right capitalize">{formatDateLong(reserva.fecha_inicio)}</dd>
+              <dd className="text-right first-letter:uppercase">{formatDateLong(reserva.fecha_inicio)}</dd>
               <dt className="text-muted-foreground">Devuelve</dt>
-              <dd className="text-right capitalize">{formatDateLong(reserva.fecha_fin)}</dd>
+              <dd className="text-right first-letter:uppercase">{formatDateLong(reserva.fecha_fin)}</dd>
               <dt className="text-muted-foreground">Duración</dt>
               <dd className="text-right tabular">{duracionDias(reserva.fecha_inicio, reserva.fecha_fin)} día(s)</dd>
               <dt className="text-muted-foreground">Registrada</dt>
