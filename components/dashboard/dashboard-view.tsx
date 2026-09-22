@@ -35,6 +35,7 @@ function saludo(): string {
       new Date()
     )
   )
+  if (hora < 6) return "Buenas noches"
   if (hora < 12) return "Buen día"
   if (hora < 20) return "Buenas tardes"
   return "Buenas noches"
