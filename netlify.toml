@@ -1,0 +1,29 @@
+# Configuración de despliegue en Netlify.
+# El adaptador oficial de Next.js se encarga del App Router, las Server Actions,
+# los route handlers (exportación de reportes) y el middleware de sesión.
+
+[build]
+  command = "pnpm build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "22"
+  # Netlify detecta pnpm por el pnpm-lock.yaml del repo.
+  NEXT_TELEMETRY_DISABLED = "1"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+# Las cabeceras de seguridad se definen en next.config.ts y las aplica el adaptador.
+# Variables de entorno necesarias (cargarlas en Netlify, no en este archivo):
+#   NEXT_PUBLIC_SUPABASE_URL              → pública
+#   NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY  → pública
+#   SUPABASE_SERVICE_ROLE_KEY             → secreta (solo servidor, para la sección Usuarios)
+
+[context.production.environment]
+  NODE_ENV = "production"
+
+[dev]
+  command = "pnpm dev"
+  targetPort = 3000
+  framework = "#custom"
