@@ -47,3 +47,6 @@ supabase/.temp
 
 # modo demo local
 /.demo/
+
+# navegador de pruebas
+.playwright-mcp/

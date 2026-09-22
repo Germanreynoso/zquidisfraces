@@ -27,7 +27,7 @@ import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle }
 import { Skeleton } from "@/components/ui/skeleton"
 import { useProximasDevoluciones, useReservasProximas, useResumen, useTopDisfraces } from "@/hooks/use-dashboard"
 import { CATEGORIA_LABEL, ESTADO_RESERVA_LABEL, ESTADO_RESERVA_TONE } from "@/lib/constants"
-import { daysBetween, formatCurrency, formatDate, formatDateLong, formatNumber, todayISO } from "@/lib/format"
+import { daysBetween, formatCurrency, formatDate, formatDateLong, formatNumber, pluralize, todayISO } from "@/lib/format"
 
 function saludo(): string {
   const hora = Number(
@@ -64,7 +64,7 @@ export function DashboardView() {
     <>
       <PageHeader
         title={`${saludo()}${profile.nombre ? `, ${profile.nombre.split(" ")[0]}` : ""}`}
-        description={<span className="capitalize">{formatDateLong(hoy)}</span>}
+        description={<span className="first-letter:uppercase">{formatDateLong(hoy)}</span>}
         actions={
           <>
             <Button variant="outline" asChild>
@@ -96,7 +96,7 @@ export function DashboardView() {
           tone="violet"
           loading={loading}
           value={formatNumber(r?.total_unidades)}
-          hint={r ? `${formatNumber(r.modelos)} modelos` : undefined}
+          hint={r ? pluralize(r.modelos, "modelo") : undefined}
           href="/dashboard/inventario"
         />
         <StatCard
@@ -114,7 +114,7 @@ export function DashboardView() {
           tone="info"
           loading={loading}
           value={formatNumber(r?.alquilados)}
-          hint={r ? `${formatNumber(r.alquileres_activos)} alquileres activos` : undefined}
+          hint={r ? `${pluralize(r.alquileres_activos, "alquiler", "alquileres")} activo${r.alquileres_activos === 1 ? "" : "s"}` : undefined}
           href="/dashboard/alquileres"
         />
         <StatCard

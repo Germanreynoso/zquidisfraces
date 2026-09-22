@@ -25,8 +25,9 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
+    // Las variables de fuente van en <body>: next-themes reescribe la clase de <html> (light/dark).
     <html lang="es" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} ${bricolage.variable} antialiased`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} ${bricolage.variable} font-sans antialiased`}>
         <Providers>{children}</Providers>
       </body>
     </html>
