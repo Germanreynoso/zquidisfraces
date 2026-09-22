@@ -1,5 +1,5 @@
 -- =============================================================================
--- ZquiDisfraces · 03 · Row Level Security y permisos
+-- ZiquiDisfraces · 03 · Row Level Security y permisos
 --
 --   ADMIN    → acceso total.
 --   EMPLEADO → lectura total; crea/edita clientes; alquileres, devoluciones, pagos y reservas
@@ -122,5 +122,11 @@ revoke execute on all functions in schema public from anon;
 grant execute on all functions in schema public to authenticated;
 grant execute on all functions in schema public to service_role;
 
--- Las tablas y vistas quedan protegidas por RLS / security_invoker; anon no tiene políticas.
+-- Privilegios de tabla explícitos: no dependemos de los privilegios por defecto del proyecto.
+-- El acceso real a filas lo deciden las políticas RLS de arriba (y security_invoker en las vistas).
+grant usage on schema public to anon, authenticated, service_role;
+grant select, insert, update, delete on all tables in schema public to authenticated;
+grant all on all tables in schema public to service_role;
+
+-- anon no tiene políticas ni privilegios.
 revoke all on all tables in schema public from anon;

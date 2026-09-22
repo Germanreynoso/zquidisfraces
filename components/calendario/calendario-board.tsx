@@ -126,7 +126,7 @@ export default function CalendarioBoard() {
   }, [])
 
   return (
-    <div className="calendario-zqui flex flex-col gap-4">
+    <div className="calendario-ziqui flex flex-col gap-4">
       <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
         <div className="flex min-w-0 items-center gap-2">
           <Button variant="outline" size="icon-sm" onClick={() => api()?.prev()} aria-label="Período anterior">

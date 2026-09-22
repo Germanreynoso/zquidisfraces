@@ -1,5 +1,5 @@
 {
-  "name": "zquidisfraces",
+  "name": "ziquidisfraces",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -12,7 +12,9 @@
     "verify:db": "tsx scripts/verify-db.ts",
     "gen:types": "tsx scripts/gen-types.ts",
     "create-admin": "tsx scripts/create-admin.ts",
-    "check": "pnpm typecheck && pnpm lint && pnpm test && pnpm verify:db"
+    "check": "pnpm typecheck && pnpm lint && pnpm test && pnpm verify:db",
+    "demo": "tsx scripts/demo-server.ts",
+    "db:apply": "tsx scripts/db-apply.ts"
   },
   "dependencies": {
     "@fullcalendar/core": "~6.1.21",
@@ -51,6 +53,7 @@
   },
   "devDependencies": {
     "@electric-sql/pglite": "^0.5.8",
+    "@electric-sql/pglite-socket": "0.2.11",
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
     "@tanstack/react-query-devtools": "^5.103.2",
@@ -60,6 +63,7 @@
     "dotenv": "^18.0.2",
     "eslint": "^9",
     "eslint-config-next": "15.5.25",
+    "postgres": "^3.4.9",
     "tailwindcss": "^4",
     "tsx": "^4.23.15",
     "typescript": "^5",

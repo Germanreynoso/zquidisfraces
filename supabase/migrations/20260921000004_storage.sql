@@ -1,5 +1,5 @@
 -- =============================================================================
--- ZquiDisfraces · 04 · Storage: bucket de imágenes de disfraces
+-- ZiquiDisfraces · 04 · Storage: bucket de imágenes de disfraces
 --   Lectura pública por URL (las fotos no son sensibles y se muestran en la app).
 --   Listado solo staff. Subida, reemplazo y borrado solo admin. Máx 5 MB, jpeg/png/webp.
 -- =============================================================================

@@ -51,7 +51,7 @@ export default function LoginPage() {
           </ul>
         </div>
 
-        <p className="relative text-sm text-white/50">© {new Date().getFullYear()} ZquiDisfraces</p>
+        <p className="relative text-sm text-white/50">© {new Date().getFullYear()} ZiquiDisfraces</p>
       </aside>
 
       <main className="flex items-center justify-center p-6 md:p-10">

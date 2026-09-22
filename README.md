@@ -1,4 +1,4 @@
-# ZquiDisfraces
+# ZiquiDisfraces
 
 Sistema web para administrar un negocio de alquiler de disfraces: inventario por talle y estado, clientes,
 alquileres, devoluciones (con daños y faltantes), reservas sin sobreventa, calendario, alertas y reportes
@@ -27,8 +27,9 @@ Completá `.env.local` con los datos de **Supabase → Project Settings → API*
 | Variable | Valor | ¿Pública? |
 |---|---|---|
 | `NEXT_PUBLIC_SUPABASE_URL` | URL del proyecto | Sí |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | clave `anon` / `publishable` | Sí (la protege RLS) |
-| `SUPABASE_SERVICE_ROLE_KEY` | clave `service_role` / `secret` | **No. Nunca la subas ni la expongas** |
+| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | clave `publishable` (o `NEXT_PUBLIC_SUPABASE_ANON_KEY` con la `anon` legacy) | Sí (la protege RLS) |
+| `SUPABASE_SERVICE_ROLE_KEY` | clave `secret` / `service_role` | **No. Nunca la subas ni la expongas** |
+| `SUPABASE_DB_URL` | Connect → Session pooler → URI (solo para `pnpm db:apply`) | **No** |
 
 ## 3. Base de datos
 
@@ -41,10 +42,16 @@ Las migraciones están en `supabase/migrations/` y se aplican **en orden**:
 | `20260921000003_rls.sql` | Row Level Security y permisos por rol |
 | `20260921000004_storage.sql` | Bucket `disfraces` para imágenes y sus políticas |
 
-**Opción A: SQL Editor (más simple).** En Supabase → SQL Editor, pegá y ejecutá cada archivo en orden.
+**Opción A: un comando.** Con `SUPABASE_DB_URL` en `.env.local`:
+
+```bash
+pnpm db:apply --seed   # migraciones pendientes + datos de prueba
+```
+
+**Opción B: SQL Editor.** En Supabase → SQL Editor, pegá y ejecutá cada archivo en orden.
 Después, si querés datos de prueba, ejecutá `supabase/seed.sql`.
 
-**Opción B: Supabase CLI.**
+**Opción C: Supabase CLI.**
 
 ```bash
 npx supabase login
@@ -99,6 +106,16 @@ pnpm dev        # http://localhost:3000
 pnpm build && pnpm start
 ```
 
+### Modo demo (sin Supabase ni Docker)
+
+```bash
+pnpm demo       # http://localhost:3000 · demo@ziquidisfraces.com / demo1234
+```
+
+Levanta en tu PC una base en memoria con las migraciones reales y los datos de prueba, la API REST oficial
+(PostgREST, se descarga sola la primera vez) y un login simulado. Sirve para mostrar el sistema o probar cambios;
+los datos se reinician al cerrarlo. No usar en producción.
+
 ## 7. Scripts
 
 | Comando | Qué hace |
@@ -111,6 +128,8 @@ pnpm build && pnpm start
 | `pnpm verify:db` | Migraciones + seed + tests SQL en PGlite |
 | `pnpm gen:types` | Regenera `types/database.types.ts` desde las migraciones |
 | `pnpm create-admin` | Crea o promueve al administrador |
+| `pnpm db:apply [--seed]` | Aplica migraciones pendientes (y datos de prueba) a tu Supabase |
+| `pnpm demo` | Modo demo local sin Supabase |
 | `pnpm check` | typecheck + lint + tests + verify:db |
 
 También podés regenerar los tipos desde tu proyecto real con

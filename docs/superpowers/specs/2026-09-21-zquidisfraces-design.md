@@ -1,4 +1,4 @@
-# ZquiDisfraces — Diseño del sistema de gestión de alquiler de disfraces
+# ZiquiDisfraces — Diseño del sistema de gestión de alquiler de disfraces
 
 Fecha: 2026-09-21 · Estado: aprobado para implementación
 

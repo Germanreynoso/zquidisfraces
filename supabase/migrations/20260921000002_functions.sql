@@ -1,5 +1,5 @@
 -- =============================================================================
--- ZquiDisfraces · 02 · Funciones: roles, triggers, disponibilidad, operaciones de negocio, vistas, reportes
+-- ZiquiDisfraces · 02 · Funciones: roles, triggers, disponibilidad, operaciones de negocio, vistas, reportes
 --
 -- Convenciones:
 --   * Errores de negocio: RAISE EXCEPTION (SQLSTATE P0001) con mensaje en español apto para mostrar al usuario.
