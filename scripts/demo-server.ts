@@ -415,7 +415,9 @@ function startNext() {
   const child = spawn(process.execPath, [nextBin, "dev", "--turbopack", "-p", String(PORTS.next)], {
     env: {
       ...process.env,
+      // Las variables del proceso tienen prioridad sobre .env.local: el demo nunca toca tu proyecto real.
       NEXT_PUBLIC_SUPABASE_URL: GATEWAY_URL,
+      NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: ANON_KEY,
       NEXT_PUBLIC_SUPABASE_ANON_KEY: ANON_KEY,
       SUPABASE_SERVICE_ROLE_KEY: SERVICE_ROLE_KEY,
     },
