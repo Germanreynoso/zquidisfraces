@@ -37,7 +37,9 @@ export type GroqConfig = { apiKey: string; model: string }
 export function getGroqConfig(): GroqConfig {
   const apiKey = process.env.GROQ_API_KEY
   if (!apiKey) {
-    throw new Error("Falta GROQ_API_KEY (solo servidor). El asistente necesita una clave de Groq en .env.local.")
+    throw new Error(
+      "Falta GROQ_API_KEY (solo servidor): cargala en .env.local para desarrollo y en las variables del sitio para producción."
+    )
   }
   return { apiKey, model: process.env.GROQ_MODEL || "openai/gpt-oss-120b" }
 }
@@ -45,7 +47,9 @@ export function getGroqConfig(): GroqConfig {
 export function getServiceRoleKey(): string {
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY
   if (!key) {
-    throw new Error("Falta SUPABASE_SERVICE_ROLE_KEY (solo servidor). Revisá .env.local.")
+    throw new Error(
+      "Falta SUPABASE_SERVICE_ROLE_KEY (solo servidor): cargala en .env.local para desarrollo y en las variables del sitio para producción."
+    )
   }
   return key
 }
