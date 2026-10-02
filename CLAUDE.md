@@ -22,5 +22,7 @@ Spec: `docs/superpowers/specs/2026-09-21-zquidisfraces-design.md`.
   `todayISO()` (zona Buenos Aires, igual que `public.hoy()`).
 - Asistente (`lib/asistente/`): herramientas de SOLO LECTURA sobre el cliente Supabase del usuario (RLS aplica);
   los parámetros opcionales del esquema deben aceptar `null` (Groq valida las tool calls del modelo).
+- Avisos: `lib/telegram/` (resumen diario) + `app/api/cron/telegram` protegido por `CRON_SECRET`, disparado por
+  `netlify/functions/aviso-diario.mts`. Corre sin sesión: usa el cliente admin (service role).
 - Colores de gráficos: `var(--chart-1..5)` en orden fijo (paleta validada para daltonismo). Estados de stock:
   emerald/sky/amber/rose 600.
