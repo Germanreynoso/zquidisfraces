@@ -32,6 +32,9 @@ Completá `.env.local` con los datos de **Supabase → Project Settings → API*
 | `SUPABASE_DB_URL` | Connect → Session pooler → URI (solo para `pnpm db:apply`) | **No** |
 | `GROQ_API_KEY` | clave de [console.groq.com](https://console.groq.com) para el asistente | **No** |
 | `GROQ_MODEL` | opcional: modelo de Groq (por defecto `openai/gpt-oss-120b`) | Sí |
+| `TELEGRAM_BOT_TOKEN` | token del bot de avisos (@BotFather) | **No** |
+| `TELEGRAM_CHAT_ID` | chat o grupo donde escribe el bot | **No** |
+| `CRON_SECRET` | cadena larga que protege el endpoint del resumen diario | **No** |
 
 ## 3. Base de datos
 
@@ -211,6 +214,21 @@ npx netlify deploy --build --prod
 ```
 
 Para probar el build de Netlify sin desplegar: `npx netlify build --offline`.
+
+### Avisos diarios por Telegram (opcional)
+
+Todas las mañanas a las 9:00 (Argentina) el sistema manda un resumen con las devoluciones vencidas,
+las que vencen hoy y mañana, los retiros de reservas del día y el stock para revisar.
+
+1. En Telegram, hablale a **@BotFather** → `/newbot` → copiá el **token**.
+2. Escribile algo a tu bot (o agregalo a un grupo) y obtené el **chat id**:
+   `https://api.telegram.org/bot<TOKEN>/getUpdates` y buscá `"chat":{"id":...}`.
+3. Cargá `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID` y `CRON_SECRET` en `.env.local` y en Netlify.
+4. Probalo desde la app: **Alertas → Enviar a Telegram** (solo administrador).
+
+El envío automático lo hace `netlify/functions/aviso-diario.mts`, una tarea programada de Netlify que
+llama a `POST /api/cron/telegram` con el secreto. Requiere `SUPABASE_SERVICE_ROLE_KEY`, porque corre
+sin sesión de usuario.
 
 ### Después del primer deploy
 

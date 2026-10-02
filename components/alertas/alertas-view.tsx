@@ -6,6 +6,7 @@ import { ChevronRight, PartyPopper, RefreshCw } from "lucide-react"
 
 import { DataTableFacetedFilter } from "@/components/data-table/data-table-toolbar"
 import { ALERTA_ICON } from "@/components/layout/notifications-bell"
+import { EnviarResumenTelegram } from "@/components/alertas/enviar-resumen-telegram"
 import { PageHeader } from "@/components/page-header"
 import { StatusBadge, TONE_DOT } from "@/components/status-badge"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
@@ -96,10 +97,13 @@ export function AlertasView() {
             : "Se recalculan automáticamente cada minuto."
         }
         actions={
-          <Button variant="outline" onClick={() => refetch()} disabled={isFetching}>
-            <RefreshCw className={cn(isFetching && "animate-spin")} />
-            Actualizar
-          </Button>
+          <>
+            <EnviarResumenTelegram />
+            <Button variant="outline" onClick={() => refetch()} disabled={isFetching}>
+              <RefreshCw className={cn(isFetching && "animate-spin")} />
+              Actualizar
+            </Button>
+          </>
         }
       />
 
