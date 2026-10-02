@@ -33,7 +33,7 @@ Completá `.env.local` con los datos de **Supabase → Project Settings → API*
 | `GROQ_API_KEY` | clave de [console.groq.com](https://console.groq.com) para el asistente | **No** |
 | `GROQ_MODEL` | opcional: modelo de Groq (por defecto `openai/gpt-oss-120b`) | Sí |
 | `TELEGRAM_BOT_TOKEN` | token del bot de avisos (@BotFather) | **No** |
-| `TELEGRAM_CHAT_ID` | chat o grupo donde escribe el bot | **No** |
+| `TELEGRAM_CHAT_ID` | chat o grupo donde escribe el bot (varios separados por coma) | **No** |
 | `CRON_SECRET` | cadena larga que protege el endpoint del resumen diario | **No** |
 
 ## 3. Base de datos

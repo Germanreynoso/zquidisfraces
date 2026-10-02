@@ -1,5 +1,8 @@
-import { describe, expect, it } from "vitest"
+import { describe, expect, it, vi } from "vitest"
 
+vi.mock("server-only", () => ({}))
+
+import { parsearChats } from "@/lib/telegram/enviar"
 import { construirResumen, type DatosResumen } from "@/lib/telegram/resumen"
 
 const vacio: DatosResumen = { hoy: "2026-10-02", vencidas: [], proximas: [], retiros: [], stock: [] }
@@ -56,5 +59,18 @@ describe("construirResumen", () => {
     })
     expect(texto).toContain("Retiros de reservas de hoy (1)")
     expect(texto).toContain("(sin confirmar)")
+  })
+})
+
+describe("parsearChats", () => {
+  it("acepta uno o varios destinatarios separados por coma", () => {
+    expect(parsearChats("8999372270")).toEqual(["8999372270"])
+    expect(parsearChats(" 8999372270 , 5610278550 ")).toEqual(["8999372270", "5610278550"])
+    expect(parsearChats("-1001234567890")).toEqual(["-1001234567890"])
+  })
+
+  it("descarta valores que no son ids", () => {
+    expect(parsearChats("")).toEqual([])
+    expect(parsearChats("pegá-acá-el-id, 123")).toEqual(["123"])
   })
 })
